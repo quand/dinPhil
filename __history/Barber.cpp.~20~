@@ -1,0 +1,84 @@
+//---------------------------------------------------------------------------
+
+#include <vcl.h>
+#pragma hdrstop
+#include "Client.h"
+#include "Barber.h"
+//---------------------------------------------------------------------------
+#pragma package(smart_init)
+#pragma resource "*.dfm"
+TForm1 *Form1;
+//---------------------------------------------------------------------------
+__fastcall TForm1::TForm1(TComponent* Owner)
+	: TForm(Owner)
+{
+Form1->Add->Enabled = false; //кнопка добавления в очередь недоступна
+Barber = CreateMutex(NULL, false, "barber"); // создаем парикмахера
+Form1->Sleep->Visible = false;
+Form1->Work->Visible = false;
+}
+//---------------------------------------------------------------------------
+void __fastcall TForm1::N2Click(TObject *Sender)
+{
+ShowMessage ("В парикмахерской имеются 5 кресел для посетителей в зале ожидания и 1 кресло в зале стрижки.\nЕсли посетитель может занять место в зале ожидания он его занимает,\nесли мест нет, он уходит.\nЕсли в парикмахерской долгое время нет клиентов парикмахер засыпает.");
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::N3Click(TObject *Sender)
+{
+Close();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::N1Click(TObject *Sender)
+{
+Timer1->Interval = 15000; //задаем таймеру интервал проверки "занятости" парикмахера
+Timer1->Enabled = true; //активируем таймер
+Form1->Events->Lines->Add("Парикмахерская открылась, парикмахер и ждет клиентов");
+Form1->N1->Enabled = false; //кнопка начала работы недоступна
+Form1->Add->Enabled = true; //кнопка добавления в очередь активная
+Form1->Sleep->Visible = false;
+Form1->Work->Visible = true;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Timer1Timer(TObject *Sender)
+{
+if (sleep == true) { //если парикмахер не спит
+//проверяем свободен ли парикмахер (нет ли клиентов)
+DWORD barber_kr = WaitForSingleObject(Barber, 0);
+//если клиентов нет, парикмахер засыпает
+if ((barber_kr == WAIT_OBJECT_0)) {
+	Form1->Events->Lines->Add("Парикмахер не дождался клиентов и уснул");
+	sleep = false;
+	Form1->Sleep->Visible = true;
+	Form1->Work->Visible = false;
+}
+}
+//запускаем таймер снова, для непрерывной проверки на наличие клиентов
+Timer1->Enabled = false;
+Timer1->Enabled = true;	
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::AddClick(TObject *Sender)
+{
+if (sleep == false) { //если парикмахер спит, то создаем клиента и будим парикмахера
+	STARTUPINFO si = { sizeof(si) };
+	PROCESS_INFORMATION pi;
+	//создаем клиента
+	CreateProcess(NULL, "Client1.exe", NULL, NULL, TRUE, 0, NULL, NULL, &si, &pi);
+	Form1->Events->Lines->Add("Пришел клиент и разбудил парикмахера");
+	Form1->Sleep->Visible = false;
+    Form1->Work->Visible = true;
+	//будим парикмахера
+	ReleaseMutex(Barber);
+	sleep = true;
+	} else { //если же парикмахер не спит, то просто создаем клиента
+		STARTUPINFO si = { sizeof(si) };
+		PROCESS_INFORMATION pi;
+		CreateProcess(NULL, "Client1.exe", NULL, NULL, TRUE, 0, NULL, NULL, &si, &pi);
+	}
+}
+//---------------------------------------------------------------------------
+

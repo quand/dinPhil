@@ -1,0 +1,45 @@
+//---------------------------------------------------------------------------
+
+#include <vcl.h>
+#pragma hdrstop
+#include "Barber.h"
+#include "Client.h"
+//---------------------------------------------------------------------------
+#pragma package(smart_init)
+#pragma resource "*.dfm"
+TForm2 *Form2;
+//---------------------------------------------------------------------------
+__fastcall TForm2::TForm2(TComponent* Owner)
+	: TForm(Owner)
+{
+}
+//---------------------------------------------------------------------------
+void __fastcall TForm2::FormPaint(TObject *Sender)
+{
+Barber = OpenMutex(MUTEX_ALL_ACCESS, true, "barber");	//открываем мьютекс парикмахера
+ //создаем семафоры, разделяющие 5 кресtk в зале ожидания
+Client = CreateSemaphore(NULL, 5, 5, "client");
+Form2->Events->Lines->Add("Клиен пришел в парикмахерскую");
+DWORD dw = WaitForSingleObject(Client, 1000); //попытка занять очередь
+	if (dw == WAIT_TIMEOUT) { //попытка не удалась, зал ожидания пере-полнен
+		Form2->Events->Lines->Add("Все места в зале ожидания заняты, клиент ушел");
+		Sleep(3000);
+		exit(0);		//клиент уходит
+	}
+	Form2->Events->Lines->Add("Занял очередь к парикмахеру");
+	//если попытка занять очередь в зале ожидания удачная
+	WaitForSingleObject(Barber, INFINITE); //дожидаемся своей очереди к парикмахеру
+	ReleaseSemaphore(Client, 1, NULL); //освобождаем место в оче-реди к парикмахеру
+	Form2->Events->Lines->Add("Клиент зашел к парикмахеру");
+	while (Work->Position != Work->Max)
+	{ //идёт процесс стрижки
+		Work->Position++;
+		Sleep(50);
+	}
+	//освобождаем парикмахера
+	ReleaseMutex(Barber);
+	Form2->Events->Lines->Add("Клиент постригся и ушел");
+	Sleep(3000);
+	exit(0);		//клиент уходит
+}
+//---------------------------------------------------------------------------

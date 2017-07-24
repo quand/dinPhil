@@ -1,0 +1,52 @@
+//---------------------------------------------------------------------------
+
+#include <vcl.h>
+#pragma hdrstop
+#include "Client.h"
+#include "Dinnary.h"
+//---------------------------------------------------------------------------
+#pragma package(smart_init)
+#pragma resource "*.dfm"
+#define COUNT 5
+
+TBarberForm *BarberForm;
+//---------------------------------------------------------------------------
+__fastcall TBarberForm::TBarberForm(TComponent* Owner)
+	: TForm(Owner)
+{
+for (int i = 0; i < 5; i++) {
+	Fork[i] = CreateMutex(NULL, false, "fork"+i); // создаем мьютекс парикмахера
+	}
+}
+//---------------------------------------------------------------------------
+void __fastcall TBarberForm::N2Click(TObject *Sender)
+{
+ShowMessage ("В столовой имеются 4 кресла для еды и 5 вилок.\nЕсли посетитель может занять место за столом он его занимает,\nесли мест нет, он уходит.");
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TBarberForm::N3Click(TObject *Sender)
+{
+Close();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TBarberForm::N1Click(TObject *Sender)
+{   for (int i = 0; i < COUNT; i++) {
+	STARTUPINFO si;PROCESS_INFORMATION pi;
+		ZeroMemory(&si,sizeof(STARTUPINFO));
+		si.cb=sizeof(STARTUPINFO);
+		si.lpTitle = setTitle(i);
+		CreateProcess(NULL, "Client1.exe", NULL, NULL, TRUE, 0, NULL, NULL, &si, &pi);
+	}
+BarberForm->Events->Lines->Add("Столовая открыта");
+BarberForm->N1->Enabled = false; //кнопка начала работы недоступна
+}
+//---------------------------------------------------------------------------
+
+
+char* setTitle(int i)
+ {
+	char* Name[5]={"Платон","Сократ","Аристотель","Декарт","Кант"};
+	return Name[i];
+ }

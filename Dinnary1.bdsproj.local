@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2013.01.06 15:19:56.353.cpp,C:\Users\1\Documents\Borland Studio Projects\Unit1.cpp=C:\Users\1\Desktop\Учеба\ТВП\Курсовая работа\Катейке\Задача о спящем парикмахере\Barber.cpp</Transaction>
+    <Transaction>2013.01.06 15:19:56.353.h,C:\Users\1\Documents\Borland Studio Projects\Unit1.h=C:\Users\1\Desktop\Учеба\ТВП\Курсовая работа\Катейке\Задача о спящем парикмахере\Barber.h</Transaction>
+    <Transaction>2013.01.06 15:19:56.353.dfm,C:\Users\1\Documents\Borland Studio Projects\Unit1.dfm=C:\Users\1\Desktop\Учеба\ТВП\Курсовая работа\Катейке\Задача о спящем парикмахере\Barber.dfm</Transaction>
+    <Transaction>2013.01.06 15:20:07.201.bdsproj,C:\Users\1\Documents\Borland Studio Projects\Project1.bdsproj=C:\Users\1\Desktop\Учеба\ТВП\Курсовая работа\Катейке\Задача о спящем парикмахере\Barber1.bdsproj</Transaction>
+    <Transaction>2016.12.21 11:12:12.258.cpp,C:\УЧЕБА\Теория вычислитеьных процессов\Курсовая работа\Задача о спящем парикмахере\Barber.cpp=C:\УЧЕБА\Теория вычислитеьных процессов\Курсовая работа\Задача о спящем парикмахере\Dinnary.cpp</Transaction>
+    <Transaction>2016.12.21 11:12:12.258.h,C:\УЧЕБА\Теория вычислитеьных процессов\Курсовая работа\Задача о спящем парикмахере\Barber.h=C:\УЧЕБА\Теория вычислитеьных процессов\Курсовая работа\Задача о спящем парикмахере\Dinnary.h</Transaction>
+    <Transaction>2016.12.21 11:12:12.258.dfm,C:\УЧЕБА\Теория вычислитеьных процессов\Курсовая работа\Задача о спящем парикмахере\Barber.dfm=C:\УЧЕБА\Теория вычислитеьных процессов\Курсовая работа\Задача о спящем парикмахере\Dinnary.dfm</Transaction>
+    <Transaction>2016.12.21 11:12:31.441.bdsproj,C:\УЧЕБА\Теория вычислитеьных процессов\Курсовая работа\Задача о спящем парикмахере\Barber1.bdsproj=C:\УЧЕБА\Теория вычислитеьных процессов\Курсовая работа\Задача о спящем парикмахере\Dinnary1.bdsproj</Transaction>
+  </Transactions>
+</BorlandProject>

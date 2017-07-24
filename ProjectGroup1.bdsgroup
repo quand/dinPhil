@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<PersonalityInfo>
+		<Option>
+			<Option Name="Personality">Default.Personality</Option>
+			<Option Name="ProjectType"></Option>
+			<Option Name="Version">1.0</Option>
+			<Option Name="GUID">{5A4AEF8C-A59D-4987-8BBB-3E86C506B5B7}</Option>
+		</Option>
+	</PersonalityInfo>
+	<Default.Personality>  <Projects>
+      <Projects Name="Dinnary1.exe">Dinnary1.bdsproj</Projects>
+      <Projects Name="Phil1.exe">Phil1.bdsproj</Projects>
+      <Projects Name="Targets">Dinnary1.exe Phil1.exe</Projects>
+    </Projects>
+    <Dependencies/>
+  </Default.Personality>
+</BorlandProject>
